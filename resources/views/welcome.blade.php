@@ -19,7 +19,7 @@
                         <span>Contact us</span>
                     </button>
 
-                    <a href="#">
+                    <a href="{{ route('login') }}">
                         <button
                             class="w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-green-500 rounded-lg shrink-0 sm:w-auto hover:bg-green-600">
                             Go To Console
@@ -31,7 +31,6 @@
                     <div>
                         <a href="#" class="inline-flex items-center text-sm text-green-500 gap-x-2 hover:underline">
                             <span>Documentation</span>
-
                             <i class="mgc_phone"></i>
                         </a>
 
@@ -51,7 +50,6 @@
                     <div>
                         <a href="#" class="inline-flex items-center text-sm text-green-500 gap-x-2  hover:underline">
                             <span>Chat to support</span>
-
                             <i class="mgc_phone"></i>
                         </a>
 
