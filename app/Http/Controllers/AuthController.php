@@ -34,7 +34,7 @@ class AuthController extends Controller
         }
 
         if ($user = Auth::attempt($payload)) {
-            return redirect()->intended('backoffice.index');
+            return redirect()->route('backoffice.index');
         } else {
             return redirect()->back()->withInput($payload)->withErrors(['email' => 'Invalid email or password']);
         }
