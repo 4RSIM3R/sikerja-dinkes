@@ -14,13 +14,17 @@
         </div>
 
         <div class="mt-8">
-            <form action="#" method="POST" class="space-y-6">
+            <form action="{{ route('login') }}" method="POST" class="space-y-6">
+                @csrf
                 <div>
                     <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email
                         address</label>
                     <div class="mt-2">
                         <input id="email" autocomplete="off" name="email" type="email" autocomplete="email" required
                             class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6">
+                        @error('email')
+                            <p class="mt-1 text-xs italic text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
 
@@ -30,6 +34,9 @@
                         <input id="password" autocomplete="off" name="password" type="password"
                             autocomplete="current-password" required
                             class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6">
+                        @error('password')
+                            <p class="mt-1 text-xs italic text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
 

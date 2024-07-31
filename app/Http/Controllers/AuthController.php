@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\LoginWebRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -20,7 +21,21 @@ class AuthController extends Controller
 
         $user = User::where('email', $payload['email'])->first();
 
-        if (!$user && !Hash::check($payload['password'], $user->password)) {
+        if (!$user) {
+            return redirect()->back()->withInput($payload)->withErrors(['email' => 'Invalid email or password']);
+        }
+
+        if (!Hash::check($payload['password'], $user->password)) {
+            return redirect()->back()->withInput($payload)->withErrors(['email' => 'Invalid email or password']);
+        }
+
+        if ($user->getRoleNames()[0] != 'admin') {
+            return redirect()->back()->withInput($payload)->withErrors(['email' => 'User should be admin']);
+        }
+
+        if ($user = Auth::attempt($payload)) {
+            return redirect()->intended('backoffice.index');
+        } else {
             return redirect()->back()->withInput($payload)->withErrors(['email' => 'Invalid email or password']);
         }
     }
