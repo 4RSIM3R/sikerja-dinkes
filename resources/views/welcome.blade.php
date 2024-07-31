@@ -1,8 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.guest')
 
 @section('content')
-    <p>hello</p>
-    {{-- <section class="bg-white">
+    <section class="bg-white">
         <div class="container min-h-screen px-6 py-12 mx-auto lg:flex lg:items-center lg:gap-12">
             <div class="wf-ull lg:w-1/2">
                 <p class="text-sm font-medium text-green-500">Sikerja Console</p>
@@ -65,5 +64,5 @@
                     alt="">
             </div>
         </div>
-    </section> --}}
+    </section>
 @endsection
