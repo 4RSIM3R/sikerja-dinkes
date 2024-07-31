@@ -40,7 +40,7 @@ class AssignmentController extends Controller
 
     public function form()
     {
-        return view('assignment.create');
+        return view('assignment.form');
     }
 
     public function store(AssignmentWebRequest $request)
