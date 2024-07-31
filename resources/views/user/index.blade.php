@@ -54,6 +54,16 @@
                     url: (prev, keyword) => `${prev}?search=${keyword}`
                 }
             },
+            className: {
+               table: 'w-full caption-bottom text-sm',
+               thead: '[&_tr]:border-b',
+               tbody: '[&_tr:last-child]:border-0',
+               tr: 'border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted',
+               th: 'h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0',
+               td: 'p-4 align-middle [&:has([role=checkbox])]:pr-0',
+               pagination: 'text-sm',
+               input: 'text-sm'
+            },
         }).render(document.getElementById('grid'));
     </script>
 @endpush
