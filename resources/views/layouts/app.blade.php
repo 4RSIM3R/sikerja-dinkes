@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
         rel="stylesheet">
+    <link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         * {
@@ -121,14 +122,14 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#"
+                        <a href="{{ route('user.index') }}"
                             class="flex items-center p-2 text-sm font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                             <box-icon class="h-5 w-5" name="layout"></box-icon>
                             <span class="ml-3">Aktifitas</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#"
+                        <a  href="{{ route('user.index') }}"
                             class="flex items-center p-2 text-sm font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                             <box-icon class="h-5 w-5" name="user-pin"></box-icon>
                             <span class="ml-3">Pengguna</span>
@@ -173,6 +174,8 @@
         </div>
 
     </div>
+    <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+    @stack('scripts')
 
 </body>
 

@@ -63,6 +63,8 @@ class BaseService implements BaseContract
         }
     }
 
+    
+
     public function getByDateBetween(
         array $dateBetween = [],
         bool $paginate = false,
