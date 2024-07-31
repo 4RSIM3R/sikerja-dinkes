@@ -27,8 +27,16 @@ class UserController extends Controller
     {
         $page = $request->get('page', 1);
         $perPage = $request->get('perPage', 10);
+        $search = $request->get("search");
+        $where = $search ? [["name", "like", "%" . $search . "%"]] : [];
 
-        $data = $this->service->all(page: $page, dataPerPage: $perPage, paginate: true, relations: ['roles']);
+        $data = $this->service->all(
+            page: $page,
+            dataPerPage: $perPage,
+            paginate: true,
+            relations: ['roles'],
+            whereConditions: $where,
+        );
         return response()->json($data);
     }
 
