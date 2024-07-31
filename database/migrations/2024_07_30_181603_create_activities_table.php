@@ -16,6 +16,8 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Assignment::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('name');
+            $table->text('description');
+            $table->text('location');
             $table->timestamps();
         });
     }

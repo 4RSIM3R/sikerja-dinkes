@@ -46,7 +46,8 @@
                         <span class="sr-only">Toggle sidebar</span>
                     </button>
                     <a href="https://flowbite.com" class="flex items-center justify-between mr-4">
-                        <img src="https://flowbite.s3.amazonaws.com/logo.svg" class="mr-3 h-8" alt="Flowbite Logo" />
+                        <img src="https://flowbite.s3.amazonaws.com/logo.svg" class="mr-3 w-56 h-8"
+                            alt="Flowbite Logo" />
                     </a>
                     <form action="#" method="GET" class="hidden md:block md:pl-2">
                         <label for="topbar-search" class="sr-only">Search</label>
@@ -116,17 +117,24 @@
                 </form>
                 <ul class="space-y-2">
                     <li>
-                        <a href="#"
+                        <a href=" {{ route('backoffice.index') }}"
                             class="flex items-center p-2 text-sm font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                             <box-icon class="h-5 w-5" name="home"></box-icon>
                             <span class="ml-3">Backoffice</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('user.index') }}"
+                        <a href="{{ route('assignment.index') }}"
+                            class="flex items-center p-2 text-sm font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <box-icon type='solid' class="h-5 w-5" name='file-doc'></box-icon>
+                            <span class="ml-3">Surat Tugas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('activity.index') }}"
                             class="flex items-center p-2 text-sm font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                             <box-icon class="h-5 w-5" name="layout"></box-icon>
-                            <span class="ml-3">Aktifitas</span>
+                            <span class="ml-3">Kegiatan</span>
                         </a>
                     </li>
                     <li>
@@ -153,7 +161,7 @@
                             <li>
                                 <a href="#"
                                     class="flex items-center p-2 pl-11 w-full text-sm font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                                    Tampilan
+                                    Backoffice
                                 </a>
                             </li>
                             <li>
