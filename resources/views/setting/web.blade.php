@@ -6,7 +6,7 @@
         <p class="text-sm text-gray-400 mt-1">Setting backoffice (web) </p>
     </div>
 
-    <form class="flex flex-col space-y-4" action="{{ route('user.create') }}" method="post">
+    <form class="flex flex-col space-y-4" action="{{ route('setting.web') }}" method="post">
         @csrf
 
         @if ($errors->any())
@@ -24,7 +24,7 @@
             <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Judul</label>
             <input type="title" id="title" name="title"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
-                placeholder="Judul Website" type="text" required />
+                placeholder="Judul Website" type="text" value="{{ isset($setting) ? $setting->title : '' }}" required />
             @error('title')
                 <div class="mt-2">
                     <div class="text-sm text-red-600">
@@ -38,7 +38,7 @@
             <label for="content" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi</label>
             <textarea id="content" name="content"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
-                placeholder="Konten Website" type="text" required ></textarea>
+                placeholder="Konten Website" type="text"  required>{{ isset($setting) ? $setting->content : '' }}</textarea>
             @error('content')
                 <div class="mt-2">
                     <div class="text-sm text-red-600">
@@ -54,7 +54,7 @@
             </label>
             <input type="chief_name" id="chief_name" name="chief_name"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
-                placeholder="Judul Website" type="text" required />
+                placeholder="Judul Website" type="text" value="{{ isset($setting) ? $setting->chief_name : '' }}" required />
             @error('chief_name')
                 <div class="mt-2">
                     <div class="text-sm text-red-600">
@@ -70,7 +70,7 @@
             </label>
             <input type="chief_nip" id="chief_nip" name="chief_nip"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
-                placeholder="Judul Website" type="text" required />
+                placeholder="Judul Website" type="text" value="{{ isset($setting) ? $setting->chief_nip : '' }}" required />
             @error('chief_nip')
                 <div class="mt-2">
                     <div class="text-sm text-red-600">
