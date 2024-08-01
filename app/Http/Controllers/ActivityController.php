@@ -54,7 +54,7 @@ class ActivityController extends Controller
         if ($result instanceof Exception) {
             return redirect()->back()->withErrors($result->getMessage());
         } else {
-            return redirect()->route('assignment.index');
+            return redirect()->route('activity.index');
         }
     }
 }

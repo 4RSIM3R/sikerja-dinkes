@@ -22,12 +22,47 @@
 
 @push('scripts')
     <script>
+        function weekCount(dateString) {
+            const date = new Date(dateString);
+            const oneJan = new Date(date.getUTCFullYear(), 0, 1);
+            const numberOfDays = Math.floor((date - oneJan) / (24 * 60 * 60 * 1000));
+            const weekNumber = Math.ceil((numberOfDays + oneJan.getUTCDay() + 1) / 7);
+            return `Minggu ke-${weekNumber}`;
+        }
+
+        function dateFormat(dateString) {
+            const date = new Date(dateString);
+            const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+            const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
+                'Oktober', 'November', 'Desember'
+            ];
+
+            // Get the day name
+            const dayName = days[date.getUTCDay()];
+
+            // Get the date, month, and year
+            const day = date.getUTCDate();
+            const month = months[date.getUTCMonth()];
+            const year = date.getUTCFullYear();
+
+            // Format the result
+            return `${day} ${month} ${year}`;
+        }
+
         new gridjs.Grid({
             columns: [
                 'ID',
                 'Surat Tugas',
                 'Pelaksanaan Tugas',
-                'Periode Pelaporan',
+                'Rencana Hasil Kerja',
+                {
+                    name: 'Periode Pelaporan',
+                    formatter: (cell, row) => gridjs.html(`
+                        ${weekCount(row.cell(4).data)} <br />
+                        ${dateFormat(row.cell(4).data)} - 
+                        ${dateFormat(row.cell(5).data)}
+                    `),
+                },
                 {
                     name: 'Actions',
                     formatter: (cell, row) => gridjs.html(`
@@ -48,7 +83,14 @@
                 url: '{{ route('activity.grid') }}',
                 then: response => {
                     console.log(response.data.data);
-                    return response.data.data.map(data => [data.id, data.assignment.number, data.execution_task, data.report_period]);
+                    return response.data.data.map(data => [
+                        data.id,
+                        data.assignment.number,
+                        data.execution_task,
+                        data.result_plan,
+                        data.report_period_start,
+                        data.report_period_end
+                    ]);
                 },
                 total: data => 10
             },

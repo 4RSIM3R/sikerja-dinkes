@@ -25,7 +25,8 @@ class ActivityWebRequest extends FormRequest
             'assignment_id' => 'required|exists:assignments,id',
             'user_id' => 'required|array',
             'user_id.*' => 'exists:users,id',
-            'report_period' => 'required|date',
+            'report_period_start' => 'required|date',
+            'report_period_end' => 'required|date', 
             'execution_task' => 'required|string',
             'result_plan' => 'required|string', // Rencana Hasil Kerja
             'action_plan' => 'required|string', // Rencana Aksi

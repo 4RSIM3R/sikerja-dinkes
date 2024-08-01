@@ -54,17 +54,33 @@
             @enderror
         </div>
 
-        <div class="mb-5" id="report_period">
-            <label for="report_period" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Periode Pelaporan
+        <div class="mb-5" id="report_period_start">
+            <label for="report_period_start" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Awal Periode Pelaporan
             </label>
-            <input type="date" id="report_period" name="report_period"
+            <input type="date" id="report_period_start" name="report_period_start"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
                 placeholder="Tanggal Mulai" type="text" required />
-            @error('report_period')
+            @error('report_period_start')
                 <div class="mt-2">
                     <div class="text-sm text-red-600">
-                        {{ $errors->first('report_period') }}
+                        {{ $errors->first('report_period_start') }}
+                    </div>
+                </div>
+            @enderror
+        </div>
+
+        <div class="mb-5" id="report_period_end">
+            <label for="report_period_end" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Akhir Periode Pelaporan
+            </label>
+            <input type="date" id="report_period_end" name="report_period_end"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
+                placeholder="Tanggal Mulai" type="text" required />
+            @error('report_period_end')
+                <div class="mt-2">
+                    <div class="text-sm text-red-600">
+                        {{ $errors->first('report_period_end') }}
                     </div>
                 </div>
             @enderror
@@ -140,7 +156,7 @@
             </label>
             <input type="number" id="budget" name="budget"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
-                placeholder="Jumlah Budget" type="text" required />
+                placeholder="Jumlah Budget" type="text" />
             @error('budget')
                 <div class="mt-2">
                     <div class="text-sm text-red-600">
@@ -156,7 +172,7 @@
             </label>
             <textarea id="budget_source" name="budget_source"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
-                placeholder="Deskripsi Kegiatan" type="text" required></textarea>
+                placeholder="Deskripsi Kegiatan" type="text"></textarea>
             @error('budget_source')
                 <div class="mt-2">
                     <div class="text-sm text-red-600">
