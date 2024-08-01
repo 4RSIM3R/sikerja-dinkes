@@ -49,7 +49,7 @@ class AssignmentController extends Controller
         $payload = $request->validated();
         unset($payload['attachment']);
 
-        $result = $this->service->create($payload, $attachment);
+        $result = $this->service->create($payload, ["attachment" => $attachment]);
 
         if ($result instanceof Exception) {
             return redirect()->back()->withErrors($result->getMessage());

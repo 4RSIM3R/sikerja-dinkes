@@ -51,6 +51,7 @@
             server: {
                 url: '{{ route('assignment.grid') }}',
                 then: response => {
+                    console.log(response.data.data);
                     return response.data.data.map(data => [data.id, data.number, data.title, data.date, null]);
                 },
                 total: data => 10
