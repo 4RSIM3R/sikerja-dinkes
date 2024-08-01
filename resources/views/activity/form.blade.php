@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <form class="flex flex-col space-y-4" action="{{ route('user.create') }}" method="post">
+    <form class="flex flex-col space-y-4" action="{{ route('activity.store') }}" method="post">
         <div>
             <h1 class="text-xl font-semibold">Form Kegiatan</h1>
             <p class="text-sm text-gray-400 mt-1">Buat kegiatan baru</p>
@@ -24,26 +24,26 @@
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md block w-full p-3">
 
             </select>
-            @error('title')
+            @error('assignment_id')
                 <div class="mt-2">
                     <div class="text-sm text-red-600">
-                        {{ $errors->first('title') }}
+                        {{ $errors->first('assignment_id') }}
                     </div>
                 </div>
             @enderror
         </div>
 
         <div class="mb-5">
-            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Nama Kegiatan
             </label>
-            <input type="text" id="name" name="name"
+            <input type="text" id="title" name="title"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
                 placeholder="Nama Kegiatan" type="text" required />
-            @error('description')
+            @error('title')
                 <div class="mt-2">
                     <div class="text-sm text-red-600">
-                        {{ $errors->first('description') }}
+                        {{ $errors->first('title') }}
                     </div>
                 </div>
             @enderror

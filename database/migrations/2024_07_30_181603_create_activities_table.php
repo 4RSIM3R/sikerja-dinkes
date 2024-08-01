@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Assignment::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->string('name');
+            $table->string('title');
             $table->text('description');
             $table->text('location');
             $table->date('start_date');

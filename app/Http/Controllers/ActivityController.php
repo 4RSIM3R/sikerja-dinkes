@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contract\ActivityContract;
 use App\Http\Requests\Web\ActivityWebRequest;
+use Exception;
 use Illuminate\Http\Request;
 
 class ActivityController extends Controller
@@ -32,7 +33,7 @@ class ActivityController extends Controller
             page: $page,
             dataPerPage: $perPage,
             paginate: true,
-            relations: ['roles'],
+            relations: ['assignment'],
             whereConditions: $where,
         );
         return response()->json($data);
@@ -45,5 +46,14 @@ class ActivityController extends Controller
 
     public function store(ActivityWebRequest $request)
     {
+        $payload = $request->validated();
+
+        $result = $this->service->create($payload);
+
+        if ($result instanceof Exception) {
+            return redirect()->back()->withErrors($result->getMessage());
+        } else {
+            return redirect()->route('assignment.index');
+        }
     }
 }

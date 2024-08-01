@@ -10,4 +10,11 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 class Activity extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
+
+    protected $guarded = [];
+
+    public function assignment()
+    {
+        return $this->belongsTo(Assignment::class);
+    }
 }

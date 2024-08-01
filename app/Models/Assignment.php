@@ -13,15 +13,17 @@ class Assignment extends Model implements HasMedia
 
     protected $guarded = [];
 
+    protected $hidden = ['media'];
+
     protected $appends = ['attachment'];
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('attachments');
+        $this->addMediaCollection('attachment');
     }
 
     public function getAttachmentAttribute()
     {
-        return $this->getFirstMediaUrl('attachments');
+        return $this->getFirstMediaUrl('attachment');
     }
 }
