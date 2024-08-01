@@ -79,14 +79,12 @@
         </div>
 
         <div class="mb-5">
-
             <label for="attachment" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 for="file_input">Surat Tugas</label>
             <input name="attachment" id="attachment" accept="application/pdf"
                 class="block w-full text-sm text-gray-900 border border-green-300 rounded-lg cursor-pointer bg-green-50 focus:outline-none"
                 aria-describedby="file_input_help" id="file_input" type="file">
             <p class="mt-1 text-sm text-gray-500" id="file_input_help">PDF Max 5MB.</p>
-
         </div>
 
 

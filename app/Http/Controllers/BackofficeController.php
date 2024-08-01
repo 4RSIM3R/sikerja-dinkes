@@ -12,7 +12,7 @@ class BackofficeController extends Controller
     {
         $user = User::query()->count('id');
         $assignment = Assignment::query()->count('id');
-        $acivity = Activity::query()->count('id');
-        return view('backoffice.index', compact('user', 'assignment', 'acivity'));
+        $activity = Activity::query()->count('id');
+        return view('backoffice.index', compact('user', 'assignment', 'activity'));
     }
 }
