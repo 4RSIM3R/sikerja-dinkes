@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('content');
+            $table->text('chief_name');
+            $table->text('chief_nip');
             $table->timestamps();
         });
     }

@@ -14,8 +14,10 @@ class WebSettingSeeder extends Seeder
     public function run(): void
     {
         WebSetting::create([
-            'name' => 'Sikerja Dinkes',
+            'title' => 'Sikerja Dinkes',
             'content' => 'Tentang Aplikasi',
+            'chief_name' => 'Dr. dr. H. Aceng Solahudin Ahmad, M. Kes',
+            'chief_nip' => ' 196806122001121005',
         ]);
     }
 }

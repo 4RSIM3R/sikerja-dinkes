@@ -26,10 +26,8 @@
             columns: [
                 'ID',
                 'Surat Tugas',
-                'Judul',
-                'Tanggal Mulai',
-                'Tanggal Selesai',
-                'Jumlah Peserta',
+                'Pelaksanaan Tugas',
+                'Periode Pelaporan',
                 {
                     name: 'Actions',
                     formatter: (cell, row) => gridjs.html(`
@@ -50,7 +48,7 @@
                 url: '{{ route('activity.grid') }}',
                 then: response => {
                     console.log(response.data.data);
-                    return response.data.data.map(data => [data.id, data.assignment.number, data.title, data.start_date, data.end_date, data.attendances_count]);
+                    return response.data.data.map(data => [data.id, data.assignment.number, data.execution_task, data.report_period]);
                 },
                 total: data => 10
             },

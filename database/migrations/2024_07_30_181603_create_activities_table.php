@@ -15,11 +15,12 @@ return new class extends Migration
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Assignment::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->string('title');
-            $table->text('description');
-            $table->text('location');
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->date('report_period');
+            $table->text('execution_task');
+            $table->text('result_plan');
+            $table->text('output');
+            $table->decimal('budget', 12, 2)->nullable();
+            $table->text('budget_source')->nullable();
             $table->timestamps();
         });
     }

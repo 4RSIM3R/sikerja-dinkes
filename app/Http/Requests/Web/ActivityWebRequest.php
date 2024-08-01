@@ -23,13 +23,15 @@ class ActivityWebRequest extends FormRequest
     {
         return [
             'assignment_id' => 'required|exists:assignments,id',
-            'title' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
-            'location' => 'required|string|max:255',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
             'user_id' => 'required|array',
             'user_id.*' => 'exists:users,id',
+            'report_period' => 'required|date',
+            'execution_task' => 'required|string',
+            'result_plan' => 'required|string', // Rencana Hasil Kerja
+            'action_plan' => 'required|string', // Rencana Aksi
+            'output' => 'required|string',
+            'budget' => 'nullable|numeric|min:0',
+            'budget_source' => 'nullable|string',
         ];
     }
 }

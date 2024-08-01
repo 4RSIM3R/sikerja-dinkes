@@ -14,8 +14,8 @@ class AppSettingSeeder extends Seeder
     public function run(): void
     {
         AppSetting::create([
-            'name' => 'Sikerja Dinkes',
-            'content' => 'Tentang Aplikasi',
+            'title' => 'Sikerja Dinkes',
+            'content' => 'Tentang Aplikasi'
         ]);
     }
 }
