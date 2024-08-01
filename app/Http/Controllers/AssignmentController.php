@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contract\AssignmentContract;
 use App\Http\Requests\Web\AssignmentWebRequest;
+use Exception;
 use Illuminate\Http\Request;
 
 class AssignmentController extends Controller
@@ -32,7 +33,6 @@ class AssignmentController extends Controller
             page: $page,
             dataPerPage: $perPage,
             paginate: true,
-            relations: ['roles'],
             whereConditions: $where,
         );
         return response()->json($data);
@@ -45,7 +45,16 @@ class AssignmentController extends Controller
 
     public function store(AssignmentWebRequest $request)
     {
-        // $this->service->create($request->all());
-        // return redirect()->route('assignment.index');
+        $attachment = $request->file('attachment');
+        $payload = $request->validated();
+        unset($payload['attachment']);
+
+        $result = $this->service->create($payload, $attachment);
+
+        if ($result instanceof Exception) {
+            return redirect()->back()->withErrors($result->getMessage());
+        } else {
+            return redirect()->route('assignment.index');
+        }
     }
 }

@@ -22,7 +22,11 @@ class AssignmentWebRequest extends FormRequest
     public function rules(): array
     {
         return [
-            
+            'number' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'date' => 'required|date',
+            'attachment' => 'required|file|mimes:pdf|max:5120',
         ];
     }
 }

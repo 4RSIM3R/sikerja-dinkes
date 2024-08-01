@@ -10,4 +10,18 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 class Assignment extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
+
+    protected $guarded = [];
+
+    protected $appends = ['attachment'];
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('attachments');
+    }
+
+    public function getAttachmentAttribute()
+    {
+        return $this->getFirstMediaUrl('attachments');
+    }
 }

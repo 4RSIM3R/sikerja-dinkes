@@ -8,7 +8,7 @@
                 <p class="text-sm text-gray-400 mt-1">List surat tugas kegiatan</p>
             </div>
 
-            <a href="{{ route('user.create') }}"
+            <a href="{{ route('assignment.create') }}"
                 class="flex items-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-md border border-gray-200 hover:bg-gray-100 focus:z-10">
                 <box-icon class="h-4 w-4 mr-2" name='plus'></box-icon>
                 Tambah Surat Tugas
@@ -24,6 +24,7 @@
     <script>
         new gridjs.Grid({
             columns: [
+                'ID',
                 'Nomor',
                 'Judul',
                 'Tanggal',
@@ -46,7 +47,7 @@
             server: {
                 url: '{{ route('assignment.grid') }}',
                 then: response => {
-                    return response.data.data.map(user => [user.id, user.name, user.email, user.roles, null]);
+                    return response.data.data.map(data => [data.id, data.number, data.title, data.date, null]);
                 },
                 total: data => 10
             },
