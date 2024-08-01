@@ -27,6 +27,7 @@ class BaseService implements BaseContract
         int|null $page = 1,
         int $dataPerPage = 10,
         array $relations = [],
+        array $relationCount = [],
         array $whereConditions = [],
         string|null $guard = null,
         string|null $foreignKey = null
@@ -46,6 +47,12 @@ class BaseService implements BaseContract
                 }
             }
 
+            if (!empty($relationCount)) {
+                foreach ($relationCount as $relation) {
+                    $query->withCount($relation);
+                }
+            }
+
             if ($paginate) {
                 $model = $query->latest()->paginate($dataPerPage, ["*"], "page", $page)->withQueryString();
 
@@ -61,9 +68,7 @@ class BaseService implements BaseContract
         } catch (Exception $exception) {
             return $exception;
         }
-    }
-
-    
+    } 
 
     public function getByDateBetween(
         array $dateBetween = [],

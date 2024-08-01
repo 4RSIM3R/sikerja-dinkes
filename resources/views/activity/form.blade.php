@@ -34,6 +34,28 @@
         </div>
 
         <div class="mb-5">
+            <label for="user_id[]" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Peserta</label>
+            <select name="user_id[]" id="user_id" multiple="multiple"
+                class="js-example-basic-multiple w-full p-0">
+
+            </select>
+            @error('user_id')
+                <div class="mt-2">
+                    <div class="text-sm text-red-600">
+                        {{ $errors->first('user_id') }}
+                    </div>
+                </div>
+            @enderror
+            @error('user_id.*')
+                <div class="mt-2">
+                    <div class="text-sm text-red-600">
+                        {{ $errors->first('user_id.*') }}
+                    </div>
+                </div>
+            @enderror
+        </div>
+
+        <div class="mb-5">
             <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Nama Kegiatan
             </label>
@@ -109,6 +131,8 @@
             @enderror
         </div>
 
+
+
         <button type="submit"
             class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
             Submit
@@ -138,6 +162,35 @@
                             results: response.data.data.map(res => {
                                 return {
                                     text: `${res.number} - ${res.title}`,
+                                    id: res.id
+                                }
+                            })
+                        }
+                    },
+                    cache: true
+                }
+            })
+        })
+
+        $(document).ready(function() {
+            $('#user_id').select2({
+                minimumInputLength: 2,
+                placeholder: 'Pilih Peserta',
+                ajax: {
+                    url: '{{ route('user.grid') }}',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            search: params.term,
+                        };
+                    },
+                    processResults: function(response, params) {
+                        console.log(response.data.data);
+                        return {
+                            results: response.data.data.map(res => {
+                                return {
+                                    text: res.name,
                                     id: res.id
                                 }
                             })

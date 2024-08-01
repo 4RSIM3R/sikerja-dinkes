@@ -34,6 +34,7 @@ class ActivityController extends Controller
             dataPerPage: $perPage,
             paginate: true,
             relations: ['assignment'],
+            relationCount: ['attendances'],
             whereConditions: $where,
         );
         return response()->json($data);

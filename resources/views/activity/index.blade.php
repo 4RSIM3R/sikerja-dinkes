@@ -49,9 +49,8 @@
             server: {
                 url: '{{ route('activity.grid') }}',
                 then: response => {
-                    return response.data.data.map(data => [data.id, data.assignment.numberm data.title, data
-                        .start_date, data.end_date, null
-                    ]);
+                    console.log(response.data.data);
+                    return response.data.data.map(data => [data.id, data.assignment.number, data.title, data.start_date, data.end_date, data.attendances_count]);
                 },
                 total: data => 10
             },

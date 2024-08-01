@@ -17,4 +17,10 @@ class Activity extends Model implements HasMedia
     {
         return $this->belongsTo(Assignment::class);
     }
+
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
 }
