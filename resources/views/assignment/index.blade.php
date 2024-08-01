@@ -36,6 +36,10 @@
                                 href="/backoffice/master/student/${row.cell(0).data}/edit">
                                 <box-icon class="h-4 w-4" name='detail'></box-icon>
                             </a>
+                            <a class="flex items-center gap-1.5 py-1.5 px-3.5 rounded text-sm transition-all duration-300 bg-transparent text-gray-800 hover:bg-gray-100 border border-gray-400"
+                                data-id="${row.cell(0).data}" href="javascript:void(0)">
+                                <i class='bx bx-cloud-download' class="h-4 w-4"></i>
+                            </a>
                             <a class="flex items-center gap-1.5 py-1.5 px-3.5 rounded text-sm transition-all duration-300 bg-transparent text-red-500 hover:bg-red-500/5 delete-btn border border-red-500"
                                 data-id="${row.cell(0).data}" href="javascript:void(0)">
                                 <i class='bx bx-trash' class="h-4 w-4"></i>

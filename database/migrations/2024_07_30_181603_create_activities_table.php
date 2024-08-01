@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->text('location');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
         });
     }

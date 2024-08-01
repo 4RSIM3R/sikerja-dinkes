@@ -1,8 +1,9 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers;
 
 use App\Contract\ActivityContract;
+use App\Http\Requests\Web\ActivityWebRequest;
 use Illuminate\Http\Request;
 
 class ActivityController extends Controller
@@ -39,7 +40,10 @@ class ActivityController extends Controller
 
     public function form()
     {
-        return view('activity.create');
+        return view('activity.form');
     }
 
+    public function store(ActivityWebRequest $request)
+    {
+    }
 }
