@@ -12,3 +12,5 @@ Route::as('activity.')->prefix('backoffice/activity')->middleware(['auth'])->gro
     Route::put('{id}', [ActivityController::class, 'update'])->name('edit');
     Route::delete('{id}', [ActivityController::class, 'destroy'])->name('destroy');
 });
+
+Route::get('backoffice/activity/{id}/report', [ActivityController::class, 'report'])->name('activity.report');

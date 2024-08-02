@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Contract\ActivityContract;
 use App\Http\Requests\Web\ActivityWebRequest;
+use App\Models\WebSetting;
+use App\Utils\WordUtils;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ActivityController extends Controller
 {
@@ -55,6 +59,23 @@ class ActivityController extends Controller
             return redirect()->back()->withErrors($result->getMessage());
         } else {
             return redirect()->route('activity.index');
+        }
+    }
+
+    public function report($id)
+    {
+        $template = base_path('report.docx');
+        $output_name = 'output_' . time() . '.docx';
+
+
+        $data = [
+            '${report_period}' => 'Hello world',
+        ];
+
+        try {
+            WordUtils::process($template, $output_name, $data);
+        } catch (Exception $e) {
+            redirect()->back()->withErrors($e->getMessage());
         }
     }
 }
