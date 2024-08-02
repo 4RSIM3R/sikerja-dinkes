@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Contract\ActivityContract;
 use App\Http\Requests\Web\ActivityWebRequest;
 use App\Models\WebSetting;
+use App\Utils\DateUtils;
 use App\Utils\WordUtils;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
@@ -66,10 +67,25 @@ class ActivityController extends Controller
     {
         $template = base_path('report.docx');
         $output_name = 'output_' . time() . '.docx';
+        $data = $this->service->findById($id);
+        $setting = WebSetting::query()->first();
 
 
         $data = [
-            '${report_period}' => 'Hello world',
+            '${report_period}' => sprintf(
+                "%s \n %s - %s",
+                DateUtils::week_count($data->report_period_start),
+                DateUtils::date_format($data->report_period_start),
+                DateUtils::date_format($data->report_period_end)
+            ),
+            '${execution_task}' => $data->execution_task,
+            '${result_plan}' => $data->result_plan,
+            '${action_plan}' => $data->action_plan,
+            '${output}' => $data->output,
+            '${budget}' => $data->budget,
+            '${budget_source}' => $data->budget_source,
+            '${chief_name}' => $setting->chief_name,
+            '${chief_nip}' => $setting->chief_nip,
         ];
 
         try {
