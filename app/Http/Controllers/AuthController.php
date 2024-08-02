@@ -5,15 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\LoginWebRequest;
 use App\Models\User;
-use App\Traits\AuthTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-
-    use AuthTrait;
-
     public function form()
     {
         return view('auth.login');
@@ -43,6 +39,4 @@ class AuthController extends Controller
             return redirect()->back()->withInput($payload)->withErrors(['email' => 'Invalid email or password']);
         }
     }
-
-    
 }

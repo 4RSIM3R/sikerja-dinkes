@@ -1,17 +1,17 @@
-<?php
+<?php 
 
-namespace App\Traits;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\LoginApiRequest;
 use App\Models\User;
 use App\Utils\WebResponseUtils;
-use Exception;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
-trait AuthTrait
+class AuthApiController extends Controller
 {
-    public function login_api(LoginApiRequest $request)
+
+    public function login(LoginApiRequest $request)
     {
         $payload = $request->validated();
 
@@ -41,4 +41,5 @@ trait AuthTrait
             return WebResponseUtils::base(["message" => $e->getMessage()], "authencation failed", 400);
         }
     }
+
 }
