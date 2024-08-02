@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Contract\ActivityContract;
 use App\Http\Requests\Web\ActivityWebRequest;
+use App\Models\Activity;
 use Exception;
 use Illuminate\Http\Request;
+use App\Http\Resources\ActivityResource;
 
 class ActivityController extends Controller
 {
@@ -56,5 +58,31 @@ class ActivityController extends Controller
         } else {
             return redirect()->route('activity.index');
         }
+    }
+
+    public function delete( Activity $activity, $id) {
+        $deleted_data = Activity::findOrFail($id);
+
+        $deleted_data->forceDelete();
+
+        return response()->json($deleted_data);
+    }
+
+    public function restore(Activity $activity, $id) {
+        $restore_data = Activity::withTrashed()->where('id', $id)->restore();
+
+        $restore_data->restore();
+        return response()->json($restore_data);
+    }
+
+    public function showDeletedData(Activity $activity) {
+        $deletedRecords = Activity::withTrashed()->get();
+        return view('activity.index', compact('deletedRecords'));
+    }
+
+    public function forceDelete(Activity $activity, $id) {
+        $force_delete = Activity::withTrashed()->where('id', $id)->forceDelete();
+            
+        return response()->json($force_delete);
     }
 }
