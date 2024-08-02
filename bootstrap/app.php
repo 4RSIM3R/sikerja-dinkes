@@ -13,6 +13,10 @@ return Application::configure(basePath: dirname(__DIR__))
             foreach (glob(base_path('routes/web/*.php')) as $file) {
                 Route::middleware(['web'])->group($file);
             }
+
+            foreach (glob(base_path('routes/api/*.php')) as $file) {
+                Route::prefix('api')->middleware(['api'])->group($file);
+            }
         }
     )
     ->withMiddleware(function (Middleware $middleware) {
