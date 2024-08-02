@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Activity::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->boolean('show_in_report')->default(false);
             $table->enum('status', ['waiting', 'present', 'absent']);
             $table->timestamps();
         });
