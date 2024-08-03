@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contract\AssignmentContract;
 use App\Http\Requests\Web\AssignmentWebRequest;
+use App\Models\Assignment;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -56,5 +57,53 @@ class AssignmentController extends Controller
         } else {
             return redirect()->route('assignment.index');
         }
+    }
+
+    public function destroy($id)
+    {
+        //check if have an id
+        $assignment = Assignment::findOrFail($id);
+
+        //SoftDeletes
+        $assignment->delete();
+
+        //return 
+        return response()->json([
+            'message' => 'Assignment has been deleted succesfuly'
+        ]);
+    }
+
+    //restore deleted data
+    public function restore($id)
+    {
+        //get deleted data with id
+        $assignment_restore = Assignment::onlyTrashed()->findOrFail($id);
+        //restoring data
+        $assignment_restore->restore();
+
+        return response()->json([
+            'message' => 'Restore Data succesfuly',
+            'data' => $assignment_restore
+        ]);
+    }
+
+    //show deleted data
+    public function deletedData($id)
+    {
+        $deleted_assignment = Assignment::onlyTrashed()->get();
+        return response()->json([
+            'data' => $deleted_assignment
+        ]);
+    }
+
+    //force delete data
+    public function forceDelete($id)
+    {
+        $force_delete_assignment = Assignment::withTrashed()->findOrFail($id);
+        $force_delete_assignment->forceDelete();
+
+        return response()->json([
+            'message' => 'Assignment has been permanently deleted successfully!'
+        ]);
     }
 }

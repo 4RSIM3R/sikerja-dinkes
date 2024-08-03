@@ -41,7 +41,7 @@
                                 <i class='bx bx-cloud-download' class="h-4 w-4"></i>
                             </a>
                             <a class="flex items-center gap-1.5 py-1.5 px-3.5 rounded text-sm transition-all duration-300 bg-transparent text-red-500 hover:bg-red-500/5 delete-btn border border-red-500"
-                                data-id="${row.cell(0).data}" href="javascript:void(0)">
+                                data-id="${row.cell(0).data}" href="javascript:void(0)}">
                                 <i class='bx bx-trash' class="h-4 w-4"></i>
                             </a>
                         </div>
@@ -80,5 +80,20 @@
                 input: 'text-sm'
             },
         }).render(document.getElementById('grid'));
+
+        //event listener for delete buttons
+        document.addEventListener('click', function(event) {
+            if(event.target.closest('.deleted-btn')) {
+                const button = event.target.closest('.deleted-btn');
+                const id = button.getAttribute('data-id');
+                if(confirm('Yakin hapus data?')) {
+                    deletedAssignment($id);
+                }
+            }
+        });
+
+        function deletedAssignment($id) {
+            fetch 
+        }
     </script>
 @endpush

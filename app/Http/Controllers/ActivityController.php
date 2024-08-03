@@ -60,10 +60,9 @@ class ActivityController extends Controller
         }
     }
 
-    public function delete( Activity $activity, $id) {
+    public function destroy( Activity $activity, $id) {
         $deleted_data = Activity::findOrFail($id);
-
-        $deleted_data->forceDelete();
+        $deleted_data->delete();
 
         return response()->json($deleted_data);
     }

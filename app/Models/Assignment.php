@@ -17,6 +17,8 @@ class Assignment extends Model implements HasMedia
 
     protected $appends = ['attachment'];
 
+    protected $dates = ['deleted_at'];
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('attachment');
