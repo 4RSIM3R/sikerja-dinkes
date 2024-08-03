@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Utils\WebResponseUtils;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class ApiMiddleware
@@ -16,6 +17,7 @@ class ApiMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+
         try {
             if (!Auth::guard('api')->user()) {
                 return WebResponseUtils::base(["message" => "Unauthorized Request"], "Unauthorized Request", 401);

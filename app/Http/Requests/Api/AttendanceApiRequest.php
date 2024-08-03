@@ -3,8 +3,9 @@
 namespace App\Http\Requests\Api;
 
 use App\Http\Requests\ApiRequest;
+use Illuminate\Foundation\Http\FormRequest;
 
-class ActivityRequest extends ApiRequest
+class AttendanceApiRequest extends ApiRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +23,8 @@ class ActivityRequest extends ApiRequest
     public function rules(): array
     {
         return [
-            //
+            'show_in_report' => 'boolean',
+            'photo' => 'mimes:jpeg,png,jpg,svg|max:5120',
         ];
     }
 }
