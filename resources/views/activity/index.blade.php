@@ -68,8 +68,12 @@
                     formatter: (cell, row) => gridjs.html(`
                     <div class="flex gap-2">
                         <a class="flex items-center gap-1.5 py-1.5 px-3.5 rounded text-sm transition-all duration-300 bg-transparent text-gray-800 hover:bg-gray-100 border border-gray-400"
-                            href="/backoffice/activity/${row.cell(0).data}/report">
+                            href="/backoffice/activity/${row.cell(0).data}">
                             <box-icon class="h-4 w-4" name='detail'></box-icon>
+                        </a>
+                        <a class="flex items-center gap-1.5 py-1.5 px-3.5 rounded text-sm transition-all duration-300 bg-transparent text-gray-800 hover:bg-gray-100 border border-gray-400"
+                            href="/backoffice/activity/${row.cell(0).data}/report">
+                            <box-icon class="h-4 w-4" name='down-arrow-circle'></box-icon>
                         </a>
                         <a class="flex items-center gap-1.5 py-1.5 px-3.5 rounded text-sm transition-all duration-300 bg-transparent text-red-500 hover:bg-red-500/5 delete-btn border border-red-500"
                             data-id="${row.cell(0).data}" href="javascript:void(0)">

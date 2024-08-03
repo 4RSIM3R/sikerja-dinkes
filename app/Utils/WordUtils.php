@@ -14,9 +14,10 @@ class WordUtils
             if (is_array($value) && isset($value['type']) && $value['type'] === 'image') {
                 if (file_exists($value['path'])) {
                     $templateProcessor->setImageValue($placeholder, [
-                        'path' => $value['path'],
-                        'width' => $value['width'] ?? 100,
-                        'height' => $value['height'] ?? 100,
+                        "path" => $value['path'],
+                        "width" => 320,
+                        "height" => 180,
+                        'ratio' => false,
                     ]);
                 } else {
                     $templateProcessor->setValue($placeholder, '');
@@ -25,6 +26,7 @@ class WordUtils
                 $templateProcessor->setValue($placeholder, $value);
             }
         }
+
 
         header('Content-Type: application/octet-stream');
         header(sprintf('Content-Disposition: attachment; filename="%s"', $output));

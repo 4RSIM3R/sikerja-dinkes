@@ -32,7 +32,12 @@ class Attendance extends Model implements HasMedia
 
     public function getImageAttribute()
     {
-        return $this->getMedia('image');
-    }
+        $image = [];
 
+        foreach ($this->media as $media) {
+            $image[] = $media->getUrl();
+        }
+
+        return $image;
+    }
 }

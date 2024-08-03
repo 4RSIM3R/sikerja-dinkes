@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Contract\ActivityContract;
 use App\Http\Requests\Web\ActivityWebRequest;
+use App\Models\Attendance;
 use App\Models\WebSetting;
 use App\Utils\DateUtils;
+use App\Utils\StringUtils;
 use App\Utils\WordUtils;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
@@ -70,6 +72,7 @@ class ActivityController extends Controller
         $data = $this->service->findById($id);
         $setting = WebSetting::query()->first();
 
+        $thumbnails = [];
 
         $data = [
             '${report_period}' => sprintf(
@@ -88,10 +91,55 @@ class ActivityController extends Controller
             '${chief_nip}' => $setting->chief_nip,
         ];
 
+        $attendances = Attendance::query()->where('activity_id', $id)
+            ->where('status', 'present')
+            ->where('show_in_report', true)
+            ->take(2)
+            ->get();
+
+
+        foreach ($attendances as $attendance) {
+            // dd($attendance->getMedia('image')[0]->getPath());
+            foreach ($attendance->getMedia('image') as $media) {
+                $thumbnails[] = $media->getPath();
+            }
+        }
+
+        if (count($thumbnails) == 0) return redirect()->back()->withErrors(["error" => "no image found"]);
+
+        if (count($thumbnails) < 2) {
+            $data['${Gambar1}'] = [
+                'type' => 'image',
+                'path' => StringUtils::normalize_path($thumbnails[0]),
+                'width' => 150,
+                'height' => 150,
+            ];
+
+            $data['${Gambar2}'] = "";
+        } else {
+            foreach ($thumbnails as $key => $value) {
+                $data[sprintf('${Gambar%s}', $key + 1)] =  [
+                    'type' => 'image',
+                    'path' => StringUtils::normalize_path($value),
+                    'width' => 150,
+                    'height' => 150,
+                ];
+            }
+        }
+
+
         try {
             WordUtils::process($template, $output_name, $data);
         } catch (Exception $e) {
-            redirect()->back()->withErrors($e->getMessage());
+            return redirect()->back()->withErrors($e->getMessage());
         }
     }
+
+    public function detail($id)
+    {
+        $data = $this->service->findById($id, relations: ['attendances', 'assignment']);
+        return view('activity.detail', compact('data'));
+    }
+
+
 }
