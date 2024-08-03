@@ -49,4 +49,46 @@ class ActivityService extends BaseService implements ActivityContract
             return $exception;
         }
     }
+
+    public function userActivity(int $userId, array $relations = [], array $whereConditions = [], bool $paginate = false, int|null $page = 1, int $dataPerPage = 10)
+    {
+        try {
+            $query = $this->model::query()
+                ->with($relations)
+                ->orderBy('id', 'DESC');
+
+            foreach ($whereConditions as $condition) {
+                if (isset($condition[0], $condition[1], $condition[2])) {
+                    if (strtolower($condition[1]) === 'like') {
+                        $query->whereRaw('LOWER(' . $condition[0] . ') LIKE ?', [$condition[2]]);
+                    } else {
+                        $query->where($condition[0], $condition[1], $condition[2]);
+                    }
+                }
+            }
+
+            if (!empty($relationCount)) {
+                foreach ($relationCount as $relation) {
+                    $query->withCount($relation);
+                }
+            }
+
+            $query->whereHas('attendances', fn ($query) => $query->where('id', $userId));
+
+            if ($paginate) {
+                $model = $query->latest()->paginate($dataPerPage, ["*"], "page", $page)->withQueryString();
+
+                return [
+                    'data' => $model,
+                    'prev_page' => (int)mb_substr($model->previousPageUrl(), -1) ?: null,
+                    'current_page' => $model->currentPage(),
+                    'next_page' => (int)mb_substr($model->nextPageUrl(), -1) ?: null
+                ];
+            } else {
+                return $query->get();
+            }
+        } catch (Exception $exception) {
+            return $exception;
+        }
+    }
 }

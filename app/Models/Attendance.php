@@ -10,4 +10,16 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 class Attendance extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
+
+    protected $guarded = [];
+
+    public function activity()
+    {
+        return $this->belongsTo(Activity::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

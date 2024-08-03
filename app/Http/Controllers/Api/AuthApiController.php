@@ -7,6 +7,7 @@ use App\Http\Requests\Api\LoginApiRequest;
 use App\Models\User;
 use App\Utils\WebResponseUtils;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthApiController extends Controller
 {

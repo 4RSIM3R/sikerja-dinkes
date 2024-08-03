@@ -16,9 +16,9 @@ class ProfileApiController extends Controller
         $this->service = $service;
     }
 
-    public function get()
+    public function index()
     {
         $user = Auth::guard('api')->user();
-        return WebResponseUtils::base($user);
+        return WebResponseUtils::response($user);
     }
 }
