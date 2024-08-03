@@ -12,6 +12,8 @@ class Attendance extends Model implements HasMedia
     use HasFactory, InteractsWithMedia;
 
     protected $guarded = [];
+    protected $hidden = ['media'];
+    protected $appends = ['image'];
 
     public function activity()
     {
@@ -22,4 +24,15 @@ class Attendance extends Model implements HasMedia
     {
         return $this->belongsTo(User::class);
     }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('image');
+    }
+
+    public function getImageAttribute()
+    {
+        return $this->getMedia('image');
+    }
+
 }

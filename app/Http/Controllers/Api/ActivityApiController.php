@@ -47,17 +47,23 @@ class ActivityApiController extends Controller
         $image = $request->file('image');
         $user_id = Auth::guard('api')->user()->id;
 
-        $payload['activity_id'] = $id;
-        $payload['user_id'] = $user_id;
-        $payload['status'] = 'present';
+        $attendance = Attendance::query()->where('activity_id', $id)->where('user_id', $user_id)->first();
 
-        unset($payload['image']);
+        if ($attendance->status == 'present') {
+            return WebResponseUtils::base(["message" => "You have already attended this activity."], status: 400);
+        } else {
+            $payload['activity_id'] = $id;
+            $payload['user_id'] = $user_id;
+            $payload['status'] = 'present';
 
-        $attendance_id = Attendance::query()->where('activity_id', $id)->where('user_id', $user_id)->first()->id;
+            unset($payload['image']);
 
-        $result = $this->attendance->update($attendance_id, $payload, ["image" => $image]);
+            $attendance = Attendance::query()->where('activity_id', $id)->where('user_id', $user_id)->first();
 
-        return WebResponseUtils::response($result);
+            $result = $this->attendance->update($attendance->id, $payload, ["image" => $image]);
+
+            return WebResponseUtils::response($result);
+        }
     }
 
     public function reimbursement(int $id, ReimburseApiRequest $request)

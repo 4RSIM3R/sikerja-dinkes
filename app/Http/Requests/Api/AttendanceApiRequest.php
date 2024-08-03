@@ -23,8 +23,31 @@ class AttendanceApiRequest extends ApiRequest
     public function rules(): array
     {
         return [
-            'show_in_report' => 'boolean',
-            'photo' => 'mimes:jpeg,png,jpg,svg|max:5120',
+            'show_in_report' => 'required|boolean',
+            'image' => 'required|mimes:jpeg,png,jpg,svg|max:5120',
         ];
+    }
+
+    /**
+     * Prepare inputs for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'show_in_report' => $this->toBoolean($this->show_in_report),
+        ]);
+    }
+
+    /**
+     * Convert to boolean
+     *
+     * @param $booleable
+     * @return boolean
+     */
+    private function toBoolean($booleable)
+    {
+        return filter_var($booleable, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
     }
 }

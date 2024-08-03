@@ -50,11 +50,13 @@ class ActivityService extends BaseService implements ActivityContract
         }
     }
 
-    public function userActivity(int $userId, array $relations = [], array $whereConditions = [], bool $paginate = false, int|null $page = 1, int $dataPerPage = 10)
+    public function userActivity(int $userId, array $whereConditions = [], bool $paginate = false, int|null $page = 1, int $dataPerPage = 10)
     {
         try {
             $query = $this->model::query()
-                ->with($relations)
+                ->with(['attendances' => function ($query) use ($userId) {
+                    $query->where('user_id', $userId);
+                }])
                 ->orderBy('id', 'DESC');
 
             foreach ($whereConditions as $condition) {
@@ -73,7 +75,7 @@ class ActivityService extends BaseService implements ActivityContract
                 }
             }
 
-            $query->whereHas('attendances', fn ($query) => $query->where('id', $userId));
+            $query->whereHas('attendances', fn ($query) => $query->where('user_id', $userId));
 
             if ($paginate) {
                 $model = $query->latest()->paginate($dataPerPage, ["*"], "page", $page)->withQueryString();

@@ -12,6 +12,8 @@ class Reimbursement extends Model implements HasMedia
     use HasFactory, InteractsWithMedia;
 
     protected $guarded = [];
+    protected $hidden = ['media'];
+    protected $appends = ['image'];
 
     public function activity()
     {
@@ -21,5 +23,10 @@ class Reimbursement extends Model implements HasMedia
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('image');
     }
 }
