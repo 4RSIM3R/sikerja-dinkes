@@ -40,8 +40,8 @@
                                 data-id="${row.cell(0).data}" href="javascript:void(0)">
                                 <i class='bx bx-cloud-download' class="h-4 w-4"></i>
                             </a>
-                            <a class="flex items-center gap-1.5 py-1.5 px-3.5 rounded text-sm transition-all duration-300 bg-transparent text-red-500 hover:bg-red-500/5 delete-btn border border-red-500"
-                                data-id="${row.cell(0).data}" href="javascript:void(0)}">
+                            <a class="flex items-center gap-1.5 py-1.5 px-3.5 rounded text-sm transition-all duration-300 bg-transparent text-red-500 hover:bg-red-500/5 deleted-btn border border-red-500"
+                                data-id="${row.cell(0).id}" href="javascript:void(0)">
                                 <i class='bx bx-trash' class="h-4 w-4"></i>
                             </a>
                         </div>
@@ -82,18 +82,37 @@
         }).render(document.getElementById('grid'));
 
         //event listener for delete buttons
-        document.addEventListener('click', function(event) {
-            if(event.target.closest('.deleted-btn')) {
-                const button = event.target.closest('.deleted-btn');
-                const id = button.getAttribute('data-id');
-                if(confirm('Yakin hapus data?')) {
-                    deletedAssignment($id);
-                }
-            }
-        });
+        // document.addEventListener('click', function(event) {
+        //     if (event.target.closest('.deleted-btn')) {
+        //         const button = event.target.closest('.deleted-btn');
+        //         const id = button.getAttribute('data-id');
+        //         if (confirm('Yakin hapus data?')) {
+        //             deleteAssignment(id);
+        //         }
+        //     }
+        // });
 
-        function deletedAssignment($id) {
-            fetch 
-        }
+        // function deleteAssignment(id) {
+        //     const url = `{{ route('assignment.destroy', ':id') }}`.replace(':id', id);
+        //     console.log(url);
+        //     fetch(url, {
+        //             method: 'DELETE',
+        //             headers: {
+        //                 'Content-Type': 'application/json',
+        //                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        //             }
+        //         })
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             if (data.success) {
+        //                 alert(data.message);
+        //                 // Refresh grid atau hapus baris yang dihapus dari grid
+        //                 location.reload(); // atau lakukan pembaruan dinamis
+        //             } else {
+        //                 alert('Gagal menghapus data.');
+        //             }
+        //         })
+        //         .catch(error => console.error('Error:', error));
+        // }
     </script>
 @endpush
