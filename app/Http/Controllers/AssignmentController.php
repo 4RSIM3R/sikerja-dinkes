@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Contract\AssignmentContract;
 use App\Http\Requests\Web\AssignmentWebRequest;
 use App\Models\Assignment;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -66,7 +67,7 @@ class AssignmentController extends Controller
         $assignment = Assignment::findOrFail($id);
 
         //SoftDeletes
-        $assignment->forceDelete    ();
+        $assignment->delete();
 
         //return 
         return response()->json([
