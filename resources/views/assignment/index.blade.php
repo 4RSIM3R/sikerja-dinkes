@@ -95,26 +95,25 @@
 
         function deleteAssignment(id) {
             const url = `{{ route('assignment.destroy', ':id') }}`.replace(':id', id);
-            console.log(url);
+            // console.log(url);
             fetch(url, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
-                        // 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     }
                 })
-                // .then(response => response.json())
-                // .then(data => {
-                //     if (data.success) {
-                //         alert(data.message);
-                //         // Refresh grid atau hapus baris yang dihapus dari grid
-                //         location.reload(); // atau lakukan pembaruan dinamis
-                //     } else {
-                //         alert('Gagal menghapus data.');
-                //     }
-                // })
-                // .catch(error => console.error('Error:', error));
+                .then(response => response.json())
+
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        location.reload()
+                    } else {
+                        alert('Gagal menghapus data.');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
         }
     </script>
 @endpush

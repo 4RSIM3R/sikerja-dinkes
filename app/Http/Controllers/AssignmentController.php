@@ -60,19 +60,20 @@ class AssignmentController extends Controller
         }
     }
 
-    public function destroy($id)
-    {
+        public function destroy($id)
+        {
 
-        //check if have an id
-        $assignment = Assignment::findOrFail($id);
+            //check if have an id
+            $assignment = Assignment::findOrFail($id);
 
-        //SoftDeletes
-        $assignment->delete();
+            //SoftDeletes
+            $assignment->delete();
 
-        //return 
-        return response()->json([
-            'message' => 'Assignment has been deleted succesfuly'
-        ]);
+            //return 
+            return response()->json([
+                'success' => true,
+                'message' => 'Assignment has been deleted succesfuly'
+            ]);
     }
 
     //restore deleted data
