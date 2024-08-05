@@ -7,10 +7,11 @@
             <p class="text-sm text-gray-400 mt-1">Buat kegiatan baru</p>
         </div>
         @csrf
+
         @if ($errors->any())
-            <div class="mb-5">
+            <div class="">
                 @foreach ($errors->all() as $error)
-                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                    <div class="p-4 m-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
                         role="alert">
                         {{ $error }}
                     </div>
@@ -92,7 +93,7 @@
             </label>
             <textarea id="execution_task" name="execution_task"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
-                placeholder="Deskripsi Kegiatan" type="text" required></textarea>
+                placeholder="Pelaksanaan Tugas" type="text" required></textarea>
             @error('execution_task')
                 <div class="mt-2">
                     <div class="text-sm text-red-600">
@@ -108,7 +109,7 @@
             </label>
             <textarea id="result_plan" name="result_plan"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
-                placeholder="Deskripsi Kegiatan" type="text" required></textarea>
+                placeholder="Rencana Hasil Kerja" type="text" required></textarea>
             @error('result_plan')
                 <div class="mt-2">
                     <div class="text-sm text-red-600">
@@ -124,7 +125,7 @@
             </label>
             <textarea id="action_plan" name="action_plan"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
-                placeholder="Deskripsi Kegiatan" type="text" required></textarea>
+                placeholder="Rencana Aksi" type="text" required></textarea>
             @error('action_plan')
                 <div class="mt-2">
                     <div class="text-sm text-red-600">
@@ -140,7 +141,7 @@
             </label>
             <textarea id="output" name="output"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
-                placeholder="Deskripsi Kegiatan" type="text" required></textarea>
+                placeholder="Output" type="text" required></textarea>
             @error('output')
                 <div class="mt-2">
                     <div class="text-sm text-red-600">
@@ -172,7 +173,7 @@
             </label>
             <textarea id="budget_source" name="budget_source"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
-                placeholder="Deskripsi Kegiatan" type="text"></textarea>
+                placeholder="Sumber Budget" type="text"></textarea>
             @error('budget_source')
                 <div class="mt-2">
                     <div class="text-sm text-red-600">

@@ -25,7 +25,7 @@ class AttendanceApiRequest extends ApiRequest
         return [
             'show_in_report' => 'required|boolean',
             'image' => 'required|array',
-            'image.*' => 'required|mimes:jpeg,png,jpg,svg|max:5120',
+            'image.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 

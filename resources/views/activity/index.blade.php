@@ -16,6 +16,17 @@
 
         </div>
 
+        @if ($errors->any())
+            <div class="mb-5">
+                @foreach ($errors->all() as $error)
+                    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                        role="alert">
+                        {{ $error }}
+                    </div>
+                @endforeach
+            </div>
+        @endif
+
         <div class="mt-4" id="grid"></div>
     </div>
 @endsection

@@ -9,10 +9,8 @@ use App\Models\WebSetting;
 use App\Utils\DateUtils;
 use App\Utils\StringUtils;
 use App\Utils\WordUtils;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ActivityController extends Controller
 {
@@ -105,10 +103,10 @@ class ActivityController extends Controller
             }
         }
 
-        if (count($thumbnails) == 0) return redirect()->back()->withErrors(["error" => "no image found"]);
+        if (count($thumbnails) == 0) return redirect()->back()->withErrors(["error" => "Belum ada yang melakukan absensi perserta."]);
 
         if (count($thumbnails) < 2) {
-            $data['${Gambar1}'] = [
+            $data['Gambar1'] = [
                 'type' => 'image',
                 'path' => StringUtils::normalize_path($thumbnails[0]),
                 'width' => 150,
@@ -118,19 +116,17 @@ class ActivityController extends Controller
             $data['${Gambar2}'] = "";
         } else {
             foreach ($thumbnails as $key => $value) {
-                $data[sprintf('${Gambar%s}', $key + 1)] =  [
+                $data[sprintf('Gambar%s', $key + 1)] =  [
                     'type' => 'image',
                     'path' => StringUtils::normalize_path($value),
-                    'width' => 150,
-                    'height' => 150,
                 ];
             }
         }
 
-
         try {
             WordUtils::process($template, $output_name, $data);
         } catch (Exception $e) {
+            dd($e);
             return redirect()->back()->withErrors($e->getMessage());
         }
     }
@@ -140,6 +136,4 @@ class ActivityController extends Controller
         $data = $this->service->findById($id, relations: ['attendances', 'assignment']);
         return view('activity.detail', compact('data'));
     }
-
-
 }
