@@ -8,6 +8,7 @@ use App\Models\Assignment;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Exception;
 use Illuminate\Http\Request;
+use Symfony\Polyfill\Intl\Idn\Resources\unidata\Regex;
 
 class AssignmentController extends Controller
 {
@@ -60,20 +61,20 @@ class AssignmentController extends Controller
         }
     }
 
-        public function destroy($id)
-        {
+    public function destroy($id)
+    {
 
-            //check if have an id
-            $assignment = Assignment::findOrFail($id);
+        //check if have an id
+        $assignment = Assignment::findOrFail($id);
 
-            //SoftDeletes
-            $assignment->delete();
+        //SoftDeletes
+        $assignment->delete();
 
-            //return 
-            return response()->json([
-                'success' => true,
-                'message' => 'Assignment has been deleted succesfuly'
-            ]);
+        //return 
+        return response()->json([
+            'success' => true,
+            'message' => 'Assignment has been deleted succesfuly'
+        ]);
     }
 
     //restore deleted data
@@ -91,12 +92,28 @@ class AssignmentController extends Controller
     }
 
     //show deleted data
-    public function deletedData($id)
+    public function trash(Request $request)
     {
-        $deleted_assignment = Assignment::onlyTrashed()->get();
-        return response()->json([
-            'data' => $deleted_assignment
-        ]);
+
+        return view('assignment.trash');
+        // $deleted_assignment = Assignment::onlyTrashed()->get();
+        // return response()->json([
+        //     'data' => $deleted_assignment
+        // ]);
+    }
+
+    public function deleted(Request $request)
+    {
+        $page = $request->get('page', 1);
+        $perPage = $request->get('perPage', 10);
+        $search = $request->get("search");
+        $where = $search ? [["number", "like", "%" . $search . "%"]] : [];
+
+        // Mengambil data yang telah dihapus dengan onlyTrashed
+        $deleted_assignment = Assignment::onlyTrashed()
+            ->where($where)
+            ->paginate($perPage, ['*'], 'page', $page);
+        return response()->json($deleted_assignment);
     }
 
     //force delete data

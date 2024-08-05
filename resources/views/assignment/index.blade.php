@@ -8,12 +8,25 @@
                 <p class="text-sm text-gray-400 mt-1">List surat tugas kegiatan</p>
             </div>
 
-            <a href="{{ route('assignment.create') }}"
+            {{-- <a href="{{ route('assignment.create') }}"
                 class="flex items-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-md border border-gray-200 hover:bg-gray-100 focus:z-10">
                 <box-icon class="h-4 w-4 mr-2" name='plus'></box-icon>
                 Tambah Surat Tugas
-            </a>
+            </a> --}}
 
+            <div class="space-y-2">
+                <a href="{{ route('assignment.create') }}"
+                    class="flex items-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-md border border-gray-200 hover:bg-gray-100 focus:z-10">
+                    <box-icon class="h-4 w-4 mr-2" name='plus'></box-icon>
+                    Tambah Surat Tugas
+                </a>
+                <a href="{{ route('assignment.trash') }}"
+                    class="flex items-center py-1 px-5 text-sm font-medium text-white-900 focus:outline-none bg-red-500 rounded-md border border-red-200 hover:bg-red-700 focus:z-10">
+                    <box-icon class="h-4 w-4 mr-2" name='trash'></box-icon>
+                    Sampah
+                </a>
+            </div>
+            
         </div>
 
         <div class="mt-4" id="grid"></div>
