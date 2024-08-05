@@ -61,11 +61,12 @@ class AssignmentController extends Controller
 
     public function destroy($id)
     {
+
         //check if have an id
         $assignment = Assignment::findOrFail($id);
 
         //SoftDeletes
-        $assignment->delete();
+        $assignment->forceDelete    ();
 
         //return 
         return response()->json([
