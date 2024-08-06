@@ -22,8 +22,7 @@ return new class extends Migration
             $table->text('action_plan')->comment('Rencana Aksi');
             $table->text('output');
             $table->decimal('budget', 12, 2)->nullable();
-            $table->text('budget_source')->nullable();
-            $table->date('deleted_at')->nullable();
+            $table->softDeletes(); 
             $table->timestamps();
         });
     }

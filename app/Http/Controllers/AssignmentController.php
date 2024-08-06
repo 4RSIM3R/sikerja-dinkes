@@ -48,6 +48,8 @@ class AssignmentController extends Controller
 
     public function store(AssignmentWebRequest $request)
     {
+        dd($request);
+
         $attachment = $request->file('attachment');
         $payload = $request->validated();
         unset($payload['attachment']);
@@ -78,7 +80,7 @@ class AssignmentController extends Controller
     }
 
     //restore deleted data
-    public function restore(Request $request, $id)
+    public function restore($id)
     {
         //get deleted data with id
         $assignment_restore = Assignment::onlyTrashed()->findOrFail($id);
@@ -86,7 +88,6 @@ class AssignmentController extends Controller
         $assignment_restore->restore();
 
         return response()->json([
-            'success' => true,
             'message' => 'Restore Data succesfuly',
             'data' => $assignment_restore
         ]);
@@ -97,6 +98,10 @@ class AssignmentController extends Controller
     {
 
         return view('assignment.trash');
+        // $deleted_assignment = Assignment::onlyTrashed()->get();
+        // return response()->json([
+        //     'data' => $deleted_assignment
+        // ]);
     }
 
     public function deleted(Request $request)
@@ -120,7 +125,7 @@ class AssignmentController extends Controller
         $force_delete_assignment->forceDelete();
 
         return response()->json([
-            'success' => true, 
+            'success' => true,
             'message' => 'Assignment has been permanently deleted successfully!'
         ]);
     }
