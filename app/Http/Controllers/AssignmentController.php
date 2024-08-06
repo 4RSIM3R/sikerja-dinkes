@@ -96,12 +96,7 @@ class AssignmentController extends Controller
     //show deleted data
     public function trash(Request $request)
     {
-
         return view('assignment.trash');
-        // $deleted_assignment = Assignment::onlyTrashed()->get();
-        // return response()->json([
-        //     'data' => $deleted_assignment
-        // ]);
     }
 
     public function deleted(Request $request)
@@ -126,7 +121,7 @@ class AssignmentController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Assignment has been permanently deleted successfully!'
+            'message' => 'Assignment has been permanently deleted successfully!!'
         ]);
     }
 }
