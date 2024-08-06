@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <form class="flex flex-col space-y-4" action="{{ route('assignment.create') }}" method="post"
+    <form class="flex flex-col space-y-4" action="{{ route('assignment.store') }}" method="post"
         enctype="multipart/form-data">
         <div>
             <h1 class="text-xl font-semibold">Form Surat Tugas</h1>
