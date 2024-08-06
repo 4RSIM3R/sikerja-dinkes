@@ -78,14 +78,15 @@ class AssignmentController extends Controller
     }
 
     //restore deleted data
-    public function restore($id)
+    public function restore(Request $request, $id)
     {
         //get deleted data with id
         $assignment_restore = Assignment::onlyTrashed()->findOrFail($id);
         //restoring data
         $assignment_restore->restore();
 
-        return response()->json([
+        return response()->route('assignment.trash')->json([
+            'success' => true,
             'message' => 'Restore Data succesfuly',
             'data' => $assignment_restore
         ]);

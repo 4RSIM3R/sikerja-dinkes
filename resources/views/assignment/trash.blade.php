@@ -32,15 +32,10 @@
                     name: 'Actions',
                     formatter: (cell, row) => gridjs.html(`
                         <div class="flex gap-2">
-                            <a class="flex items-center gap-1.5 py-1.5 px-3.5 rounded text-sm transition-all duration-300 bg-transparent text-gray-800 hover:bg-gray-100 border border-gray-400"
-                                href="/backoffice/master/student/${row.cell(0).data}/edit">
-                                <box-icon class="h-4 w-4" name='detail'></box-icon>
-                            </a>
-                            <a class="flex items-center gap-1.5 py-1.5 px-3.5 rounded text-sm transition-all duration-300 bg-transparent text-gray-800 hover:bg-gray-100 border border-gray-400"
+                            <a class="flex items-center gap-1.5 py-1.5 px-3.5 rounded text-sm transition-all duration-300 bg-transparent text-gray-800 hover:bg-gray-100 restore-btn border border-gray-400"
                                 data-id="${row.cell(0).data}" href="javascript:void(0)">
-                                <i class='bx bx-cloud-download' class="h-4 w-4"></i>
+                                <box-icon class="h-4 w-4" name='refresh'></box-icon>
                             </a>
-                            
                              <a class="flex items-center gap-1.5 py-1.5 px-3.5 rounded text-sm transition-all duration-300 bg-transparent text-red-500 hover:bg-red-500/5 delete-btn border border-red-500"
                                 data-id="${row.cell(0).data}" href="javascript:void(0)">
                                 <i class='bx bx-trash' class="h-4 w-4"></i>
@@ -58,7 +53,7 @@
                         data.id,
                         data.number,
                         data.title,
-                        data.deleted_at, 
+                        data.deleted_at,
                         null
                     ]);
                 },
@@ -91,6 +86,13 @@
 
         //event listener for delete buttons
         document.addEventListener('click', function(event) {
+            if(event.target.closest('.restore-btn')) {
+                const button = event.target.closest('.restore-btn');
+                const id = button.getAttribute('data-id');
+                if(confirm('Yakin restore data?')) {
+                    restoreAssignment(id);
+                }
+            }
             if (event.target.closest('.delete-btn')) {
                 const button = event.target.closest('.delete-btn');
                 const id = button.getAttribute('data-id');
@@ -99,6 +101,33 @@
                 }
             }
         });
+
+        function restoreAssignment(id) {
+            //define url
+            console.log(id);
+
+            const url = `{{ route('assignment.restore', ':id') }}`.replace(':id', id);
+
+            fetch(url, {
+                method: 'POST',
+                headers : {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            })
+
+            .then(response => response.json())
+
+            .then(data => {
+                if(data.success) {
+                    alert(data.message);
+                    location.reload()
+                } else {
+                    alert('gagal restore data!');
+                }
+            })
+            .catch(error => console.error('Error : ', error));
+        }
 
         function deleteAssignment(id) {
             const url = `{{ route('assignment.destroy', ':id') }}`.replace(':id', id);
