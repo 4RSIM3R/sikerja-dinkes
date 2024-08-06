@@ -116,8 +116,8 @@ class AssignmentController extends Controller
     //force delete data
     public function forceDelete($id)
     {
-        // $force_delete_assignment = Assignment::withTrashed()->findOrFail($id);
-        $force_delete_assignment = Assignment::findOrFail($id);
+        $force_delete_assignment = Assignment::withTrashed()->findOrFail($id);
+        // $force_delete_assignment = Assignment::findOrFail($id);
         $force_delete_assignment->forceDelete();
 
         return response()->json([
