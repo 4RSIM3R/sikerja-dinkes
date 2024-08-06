@@ -38,7 +38,7 @@ class ActivityController extends Controller
             page: $page,
             dataPerPage: $perPage,
             paginate: true,
-            relations: ['assignment'],
+            relations: [],
             relationCount: ['attendances'],
             whereConditions: $where,
         );
