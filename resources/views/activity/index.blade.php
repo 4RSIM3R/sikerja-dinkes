@@ -63,15 +63,14 @@
         new gridjs.Grid({
             columns: [
                 'ID',
-                'Surat Tugas',
                 'Pelaksanaan Tugas',
                 'Rencana Hasil Kerja',
                 {
                     name: 'Periode Pelaporan',
                     formatter: (cell, row) => gridjs.html(`
-                        ${weekCount(row.cell(4).data)} <br />
-                        ${dateFormat(row.cell(4).data)} - 
-                        ${dateFormat(row.cell(5).data)}
+                        ${weekCount(row.cell(3).data)} <br />
+                        ${dateFormat(row.cell(3).data)} - 
+                        ${dateFormat(row.cell(4).data)}
                     `),
                 },
                 {
@@ -100,7 +99,6 @@
                     console.log(response.data.data);
                     return response.data.data.map(data => [
                         data.id,
-                        data.assignment.number,
                         data.execution_task,
                         data.result_plan,
                         data.report_period_start,
