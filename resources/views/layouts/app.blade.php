@@ -47,8 +47,8 @@
                         </svg>
                         <span class="sr-only">Toggle sidebar</span>
                     </button>
-                    <a href="https://flowbite.com" class="flex items-center justify-between mr-4">
-                        <img src="https://flowbite.s3.amazonaws.com/logo.svg" class="mr-3 w-56 h-8"
+                    <a href="https://flowbite.com" class="flex items-center justify-between mr-4 w-56">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Lambang_Kabupaten_Sumedang.png" class="mr-3 w-8 h-8"
                             alt="Flowbite Logo" />
                     </a>
                     <form action="#" method="GET" class="hidden md:block md:pl-2">

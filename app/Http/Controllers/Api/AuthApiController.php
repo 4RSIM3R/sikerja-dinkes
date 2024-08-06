@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers\Api;
 
@@ -43,4 +43,9 @@ class AuthApiController extends Controller
         }
     }
 
+    public function logout()
+    {
+        Auth::guard('api')->logout();
+        return WebResponseUtils::base(["message" => "logout successfully"], "logout successfully", 200);
+    }
 }

@@ -56,7 +56,7 @@
 
             <div class="relative w-full mt-8 lg:w-1/2 lg:mt-0">
                 <img class=" w-full lg:h-[32rem] h-80 md:h-96 rounded-lg object-cover "
-                    src="https://be-lms.kemkes.go.id/v1/view?path=gp/uploads/images/1719989250969-4fa0bacc-8474-4d0a-80ee-68debbf3563b.png"
+                    src="https://cdn.rri.co.id/berita/Bandung/o/1714482480851-images_(1)_(26)/04u7f3wo9bxhlse.jpeg"
                     alt="">
             </div>
         </div>

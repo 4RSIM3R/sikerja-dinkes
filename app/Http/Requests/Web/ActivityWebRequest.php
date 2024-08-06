@@ -22,7 +22,6 @@ class ActivityWebRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'assignment_id' => 'required|exists:assignments,id',
             'user_id' => 'required|array',
             'user_id.*' => 'exists:users,id',
             'report_period_start' => 'required|date',

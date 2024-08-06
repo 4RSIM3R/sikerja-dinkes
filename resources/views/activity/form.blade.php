@@ -19,7 +19,7 @@
             </div>
         @endif
 
-        <div class="mb-5">
+        {{-- <div class="mb-5">
             <label for="assignment_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kegiatan</label>
             <select name="assignment_id" id="assignment_id"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md block w-full p-3">
@@ -32,7 +32,7 @@
                     </div>
                 </div>
             @enderror
-        </div>
+        </div> --}}
 
         <div class="mb-5">
             <label for="user_id[]" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Peserta</label>
@@ -153,11 +153,11 @@
 
         <div class="mb-5" id="budget">
             <label for="budget" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Jumlah Budget
+                Jumlah Anggaran
             </label>
             <input type="number" id="budget" name="budget"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
-                placeholder="Jumlah Budget" type="text" />
+                placeholder="Jumlah Anggaran" type="text" />
             @error('budget')
                 <div class="mt-2">
                     <div class="text-sm text-red-600">
@@ -169,7 +169,7 @@
 
         <div class="mb-5" id="budget_source">
             <label for="budget_source" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Sumber Budget
+                Sumber Anggaran
             </label>
             <textarea id="budget_source" name="budget_source"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
@@ -193,35 +193,6 @@
 
 @push('scripts')
     <script>
-        $(document).ready(function() {
-            $('#assignment_id').select2({
-                minimumInputLength: 2,
-                placeholder: 'Pilih Surat Tugas',
-                ajax: {
-                    url: '{{ route('assignment.grid') }}',
-                    dataType: 'json',
-                    delay: 250,
-                    data: function(params) {
-                        return {
-                            search: params.term,
-                        };
-                    },
-                    processResults: function(response, params) {
-                        console.log(response.data.data);
-                        return {
-                            results: response.data.data.map(res => {
-                                return {
-                                    text: `${res.number} - ${res.title}`,
-                                    id: res.id
-                                }
-                            })
-                        }
-                    },
-                    cache: true
-                }
-            })
-        })
-
         $(document).ready(function() {
             $('#user_id').select2({
                 minimumInputLength: 2,
