@@ -48,6 +48,7 @@
                 url: '{{ route('assignment.deleted') }}',
                 then: response => {
                     console.log(response.data.data);
+                    console.log(response.data)
                     // return response.data.data.map(data => [data.id, data.number, data.title, data.date, null]);
                     return response.data.map(data => [
                         data.id,
@@ -86,21 +87,21 @@
 
         //event listener for delete buttons
         document.addEventListener('click', function(event) {
-            if(event.target.closest('.restore-btn')) {
+            if (event.target.closest('.restore-btn')) {
                 const button = event.target.closest('.restore-btn');
                 const id = button.getAttribute('data-id');
-                if(confirm('Yakin restore data?')) {
+                if (confirm('Yakin restore data?')) {
                     restoreAssignment(id);
                 }
-            }
-            if (event.target.closest('.delete-btn')) {
+            } else if (event.target.closest('.delete-btn')) {
                 const button = event.target.closest('.delete-btn');
                 const id = button.getAttribute('data-id');
-                if (confirm('Yakin hapus data?')) {
-                    deleteAssignment(id);
+                if (confirm('Yakin hapus data permanen?')) {
+                    forceDeleteAssignment(id);
                 }
             }
         });
+        
 
         function restoreAssignment(id) {
             //define url
@@ -109,29 +110,30 @@
             const url = `{{ route('assignment.restore', ':id') }}`.replace(':id', id);
 
             fetch(url, {
-                method: 'POST',
-                headers : {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                }
-            })
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
 
-            .then(response => response.json())
+                .then(response => response.json())
 
-            .then(data => {
-                if(data.success) {
-                    alert(data.message);
-                    location.reload()
-                } else {
-                    alert('gagal restore data!');
-                }
-            })
-            .catch(error => console.error('Error : ', error));
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        location.reload()
+                    } else {
+                        alert('gagal restore data!');
+                    }
+                })
+                .catch(error => console.error('Error : ', error));
         }
 
-        function deleteAssignment(id) {
-            const url = `{{ route('assignment.destroy', ':id') }}`.replace(':id', id);
-            // console.log(url);
+        function forceDeleteAssignment(id) {
+            const url = `{{ route('assignment.forceDelete', ':id') }}`.replace(':id', id);
+            console.log(url);
+            // console.log(id);
             fetch(url, {
                     method: 'DELETE',
                     headers: {

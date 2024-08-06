@@ -14,8 +14,6 @@ Route::as('assignment.')->prefix('backoffice/assignment')->middleware(['auth'])-
     Route::get('{id}', [AssignmentController::class, 'detail'])->name('detail');
     Route::put('{id}', [AssignmentController::class, 'update'])->name('edit');
     Route::delete('{id}', [AssignmentController::class, 'destroy'])->name('destroy');
-
-    //delete feature
-   
+    Route::delete('{id}', [AssignmentController::class, 'forceDelete'])->name('forceDelete');
    
 });
