@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Contract\ActivityContract;
-use App\Http\Requests\Web\ActivityWebRequest;
+use Exception;
+use App\Models\Activity;
+use App\Utils\DateUtils;
+use App\Utils\WordUtils;
 use App\Models\Attendance;
 use App\Models\WebSetting;
-use App\Utils\DateUtils;
 use App\Utils\StringUtils;
-use App\Utils\WordUtils;
-use Exception;
 use Illuminate\Http\Request;
+use App\Contract\ActivityContract;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Web\ActivityWebRequest;
 
 class ActivityController extends Controller
 {
@@ -135,5 +137,84 @@ class ActivityController extends Controller
     {
         $data = $this->service->findById($id, relations: ['attendances', 'assignment']);
         return view('activity.detail', compact('data'));
+    }
+
+    public function destroy($id)
+    {
+        $activity = Activity::findOrFail($id);
+
+        $activity->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Activity has been deleted successfuly!'
+        ]);
+    }
+
+    public function trash(Request $request)
+    {
+        return view('activity.trash');
+    }
+
+    // public function deletedData(Request $request)
+    // {
+    //     $page = $request->get('page', 1);
+    //     $perPage = $request->get('perPage', 10);
+    //     $search = $request->get("search");
+    //     $where = $search ? [["title", "like", "%" . $search . "%"]] : [];
+
+    //     $deleted_activity = Activity::onlyTrashed()
+    //         ->where($where)
+    //         ->paginate($perPage, ['*'], 'page', $page);
+    //     return response()->json($deleted_activity);  
+    // }
+
+    public function deletedData(Request $request)
+{
+    $page = $request->get('page', 1);
+    $perPage = $request->get('perPage', 10);
+    $search = $request->get("search");
+    $where = $search ? [["title", "like", "%" . $search . "%"]] : [];
+
+    $deletedData = Activity::onlyTrashed()
+            ->where($where)
+            ->paginate($perPage, ['*'], 'page', $page);
+        return response()->json($deletedData);  
+
+    // $deletedData = $this->service->all(
+    //     page: $page,
+    //     dataPerPage: $perPage,
+    //     paginate: true,
+    //     relations: [],
+    //     relationCount: ['attendances'],
+    //     whereConditions: $where,
+    //     onlyTrashed: true 
+    // );
+
+    // return response()->json($deletedData);
+}
+
+
+    public function restore($id)
+    {
+        $activity_restore = Activity::onlyTrashed()->findOrFail($id);
+        $activity_restore->restore();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Restore data successfuly',
+            'data' => $activity_restore
+        ]);
+    }
+
+    public function forceDelete($id)
+    {
+        $forceDelete_activity = Activity::withTrashed()->findOrFail($id);
+        $forceDelete_activity->forceDelete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Activity has been deleted permanently successfuly'
+        ]);
     }
 }

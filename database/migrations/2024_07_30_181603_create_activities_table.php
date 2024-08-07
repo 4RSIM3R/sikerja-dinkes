@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('output');
             $table->decimal('budget', 12, 2)->nullable();
             $table->text('budget_source')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -11,6 +11,10 @@ Route::as('activity.')->prefix('backoffice/activity')->middleware(['auth'])->gro
     Route::get('{id}', [ActivityController::class, 'detail'])->name('detail');
     Route::put('{id}', [ActivityController::class, 'update'])->name('edit');
     Route::delete('{id}', [ActivityController::class, 'destroy'])->name('destroy');
+    Route::get('trash', [ActivityController::class, 'trash'])->name('trash');
+    Route::get('{id}', [ActivityController::class, 'deletedData'])->name('deletedData');
+    Route::post('{id}', [ActivityController::class, 'restore'])->name('restore');
+    Route::delete('forceDelete/{id}', [ActivityController::class, 'forceDelete'])->name('forceDelete');
 });
 
 Route::get('backoffice/activity/{id}/report', [ActivityController::class, 'report'])->name('activity.report');

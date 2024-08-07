@@ -20,9 +20,9 @@
                     Tambah Kegiatan
                 </a>
                 <a href="{{ route('activity.trash') }}"
-                    class="flex items-center py-1 px-5 text-sm font-medium text-white-900 focus:outline-none bg-red-500 rounded-md border border-red-200 hover:bg-red-700 focus:z-10">
-                    <box-icon class="h-4 w-4 mr-2" name='trash'></box-icon>
-                    Sampah
+                    class="flex items-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-md border border-gray-200 hover:bg-gray-100 focus:z-10">
+                    <box-icon class="h-4 w-4 mr-2" name='plus'></box-icon>
+                    Trash
                 </a>
             </div>
         </div>
@@ -89,10 +89,6 @@
                     formatter: (cell, row) => gridjs.html(`
                     <div class="flex gap-2">
                         <a class="flex items-center gap-1.5 py-1.5 px-3.5 rounded text-sm transition-all duration-300 bg-transparent text-gray-800 hover:bg-gray-100 border border-gray-400"
-                            href="/backoffice/activity/${row.cell(0).data}">
-                            <box-icon class="h-4 w-4" name='detail'></box-icon>
-                        </a>
-                        <a class="flex items-center gap-1.5 py-1.5 px-3.5 rounded text-sm transition-all duration-300 bg-transparent text-gray-800 hover:bg-gray-100 border border-gray-400"
                             href="/backoffice/activity/${row.cell(0).data}/report">
                             <box-icon class="h-4 w-4" name='down-arrow-circle'></box-icon>
                         </a>
@@ -105,7 +101,7 @@
                 },
             ],
             server: {
-                url: '{{ route('activity.grid') }}',
+                url: '{{ route('activity.deletedData') }}',
                 then: response => {
                     console.log(response.data.data);
                     return response.data.data.map(data => [
@@ -113,7 +109,7 @@
                         data.execution_task,
                         data.result_plan,
                         data.report_period_start,
-                        data.report_period_end
+                        data.deleted_at
                     ]);
                 },
                 total: data => 10
