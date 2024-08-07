@@ -4,28 +4,15 @@
     <div class="h-screen w-full bg-white">
         <div class="flex justify-between items-center">
             <div>
-                <h1 class="text-xl font-semibold">Surat Tugas</h1>
-                <p class="text-sm text-gray-400 mt-1">List surat tugas kegiatan</p>
+                <h1 class="text-xl font-semibold">Sampah</h1>
+                <p class="text-sm text-gray-400 mt-1">List surat tugas kegiatan dihapus</p>
             </div>
 
-            {{-- <a href="{{ route('assignment.create') }}"
+            <a href="{{ route('assignment.index') }}"
                 class="flex items-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-md border border-gray-200 hover:bg-gray-100 focus:z-10">
                 <box-icon class="h-4 w-4 mr-2" name='plus'></box-icon>
-                Tambah Surat Tugas
-            </a> --}}
-
-            <div class="space-y-2">
-                <a href="{{ route('assignment.create') }}"
-                    class="flex items-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-md border border-gray-200 hover:bg-gray-100 focus:z-10">
-                    <box-icon class="h-4 w-4 mr-2" name='plus'></box-icon>
-                    Tambah Surat Tugas
-                </a>
-                <a href="{{ route('assignment.trash') }}"
-                    class="flex items-center py-1 px-5 text-sm font-medium text-white-900 focus:outline-none bg-red-500 rounded-md border border-red-200 hover:bg-red-700 focus:z-10">
-                    <box-icon class="h-4 w-4 mr-2" name='trash'></box-icon>
-                    Sampah
-                </a>
-            </div>
+                Kembali ke Surat Tugas
+            </a>
 
         </div>
 
@@ -45,15 +32,11 @@
                     name: 'Actions',
                     formatter: (cell, row) => gridjs.html(`
                         <div class="flex gap-2">
-                            <a class="flex items-center gap-1.5 py-1.5 px-3.5 rounded text-sm transition-all duration-300 bg-transparent text-gray-800 hover:bg-gray-100 border border-gray-400"
-                                href="/backoffice/master/student/${row.cell(0).data}/edit">
-                                <box-icon class="h-4 w-4" name='detail'></box-icon>
-                            </a>
-                            <a class="flex items-center gap-1.5 py-1.5 px-3.5 rounded text-sm transition-all duration-300 bg-transparent text-gray-800 hover:bg-gray-100 border border-gray-400"
+                            <a class="flex items-center gap-1.5 py-1.5 px-3.5 rounded text-sm transition-all duration-300 bg-transparent text-gray-800 hover:bg-gray-100 restore-btn border border-gray-400"
                                 data-id="${row.cell(0).data}" href="javascript:void(0)">
-                                <i class='bx bx-cloud-download' class="h-4 w-4"></i>
+                                <box-icon class="h-4 w-4" name='refresh'></box-icon>
                             </a>
-                           <a class="flex items-center gap-1.5 py-1.5 px-3.5 rounded text-sm transition-all duration-300 bg-transparent text-red-500 hover:bg-red-500/5 delete-btn border border-red-500"
+                             <a class="flex items-center gap-1.5 py-1.5 px-3.5 rounded text-sm transition-all duration-300 bg-transparent text-red-500 hover:bg-red-500/5 delete-btn border border-red-500"
                                 data-id="${row.cell(0).data}" href="javascript:void(0)">
                                 <i class='bx bx-trash' class="h-4 w-4"></i>
                             </a>
@@ -62,12 +45,20 @@
                 },
             ],
             server: {
-                url: '{{ route('assignment.grid') }}',
+                url: '{{ route('assignment.deleted') }}',
                 then: response => {
                     console.log(response.data.data);
-                    return response.data.data.map(data => [data.id, data.number, data.title, data.date, null]);
+                    console.log(response.data)
+                    // return response.data.data.map(data => [data.id, data.number, data.title, data.date, null]);
+                    return response.data.map(data => [
+                        data.id,
+                        data.number,
+                        data.title,
+                        data.deleted_at,
+                        null
+                    ]);
                 },
-                total: data => 10
+                total: data => data.total
             },
             pagination: {
                 enabled: true,
@@ -94,20 +85,55 @@
             },
         }).render(document.getElementById('grid'));
 
-         //event listener for delete buttons
-         document.addEventListener('click', function(event) {
-            if (event.target.closest('.delete-btn')) {
+        //event listener for delete buttons
+        document.addEventListener('click', function(event) {
+            if (event.target.closest('.restore-btn')) {
+                const button = event.target.closest('.restore-btn');
+                const id = button.getAttribute('data-id');
+                if (confirm('Yakin restore data?')) {
+                    restoreAssignment(id);
+                }
+            } else if (event.target.closest('.delete-btn')) {
                 const button = event.target.closest('.delete-btn');
                 const id = button.getAttribute('data-id');
-                if (confirm('Yakin hapus data?')) {
-                    deleteAssignment(id);
+                if (confirm('Yakin hapus data permanen?')) {
+                    forceDeleteAssignment(id);
                 }
             }
         });
+        
 
-        function deleteAssignment(id) {
-            const url = `{{ route('assignment.destroy', ':id') }}`.replace(':id', id);
-            // console.log(url);
+        function restoreAssignment(id) {
+            //define url
+            console.log(id);
+
+            const url = `{{ route('assignment.restore', ':id') }}`.replace(':id', id);
+
+            fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
+
+                .then(response => response.json())
+
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        location.reload()
+                    } else {
+                        alert('gagal restore data!');
+                    }
+                })
+                .catch(error => console.error('Error : ', error));
+        }
+
+        function forceDeleteAssignment(id) {
+            const url = `{{ route('assignment.forceDelete', ':id') }}`.replace(':id', id);
+            console.log(url);
+            // console.log(id);
             fetch(url, {
                     method: 'DELETE',
                     headers: {
