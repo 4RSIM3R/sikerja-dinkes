@@ -8,23 +8,11 @@
                 <p class="text-sm text-gray-400 mt-1">List kegiatan</p>
             </div>
 
-            {{-- <a href="{{ route('activity.create') }}"
+            <a href="{{ route('activity.index') }}"
                 class="flex items-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-md border border-gray-200 hover:bg-gray-100 focus:z-10">
                 <box-icon class="h-4 w-4 mr-2" name='plus'></box-icon>
-                Tambah Kegiatan
-            </a> --}}
-            <div class="space y-2">
-                <a href="{{ route('activity.create') }}"
-                    class="flex items-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-md border border-gray-200 hover:bg-gray-100 focus:z-10">
-                    <box-icon class="h-4 w-4 mr-2" name='plus'></box-icon>
-                    Tambah Kegiatan
-                </a>
-                <a href="{{ route('activity.trash') }}"
-                    class="flex items-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-md border border-gray-200 hover:bg-gray-100 focus:z-10">
-                    <box-icon class="h-4 w-4 mr-2" name='plus'></box-icon>
-                    Trash
-                </a>
-            </div>
+                Kembali ke kegiatan
+            </a>
         </div>
 
         @if ($errors->any())
@@ -57,7 +45,7 @@
             const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
             const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
                 'Oktober', 'November', 'Desember'
-            ];
+            ];  
 
             // Get the day name
             const dayName = days[date.getUTCDay()];
@@ -141,10 +129,10 @@
 
         //event listener for delete buttons 
         document.addEventListener('click', function(event) {
-            if(event.target.closest('.delete-btn')) {
+            if (event.target.closest('.delete-btn')) {
                 const button = event.target.closest('.delete-btn');
                 const id = button.getAttribute('data-id');
-                if( confirm('yakin hapus data?')) {
+                if (confirm('yakin hapus data?')) {
                     deleteActivity(id);
                 }
             }
@@ -154,25 +142,25 @@
             const url = `{{ route('activity.destroy', ':id') }}`.replace(':id', id);
 
             fetch(url, {
-                method: 'DELETE',
-                headers: {
-                    'content-type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                }
-            })
+                    method: 'DELETE',
+                    headers: {
+                        'content-type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
 
-            .then(response => response.json())
+                .then(response => response.json())
 
-            .then(data => {
-                if(data.success) {
-                    alert(data.message);
-                    location.reload()
-                } else { 
-                    alert('gagal menghapus data!')
-                }
-            })
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        location.reload()
+                    } else {
+                        alert('gagal menghapus data!')
+                    }
+                })
 
-            .catch(error => console.error('Error:', error));
+                .catch(error => console.error('Error:', error));
         }
     </script>
 @endpush

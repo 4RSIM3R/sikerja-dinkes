@@ -170,29 +170,40 @@ class ActivityController extends Controller
     // }
 
     public function deletedData(Request $request)
-{
-    $page = $request->get('page', 1);
-    $perPage = $request->get('perPage', 10);
-    $search = $request->get("search");
-    $where = $search ? [["title", "like", "%" . $search . "%"]] : [];
+    {
+        $page = $request->get('page', 1);
+        $perPage = $request->get('perPage', 10);
+        $search = $request->get("search");
+        $where = $search ? [["title", "like", "%" . $search . "%"]] : [];
 
-    $deletedData = Activity::onlyTrashed()
-            ->where($where)
-            ->paginate($perPage, ['*'], 'page', $page);
-        return response()->json($deletedData);  
+        $data = $this->service->all(
+            page: $page,
+            dataPerPage: $perPage,
+            paginate: true,
+            relations: [],
+            relationCount: ['attendances'],
+            whereConditions: $where,
+        );
+        return response()->json($data);
 
-    // $deletedData = $this->service->all(
-    //     page: $page,
-    //     dataPerPage: $perPage,
-    //     paginate: true,
-    //     relations: [],
-    //     relationCount: ['attendances'],
-    //     whereConditions: $where,
-    //     onlyTrashed: true 
-    // );
+        // $deletedData = Activity::onlyTrashed()
+        //         ->where($where)
+        //         ->paginate($perPage, ['*'], 'page', $page);
+        //     return response()->json($deletedData);  
 
-    // return response()->json($deletedData);
-}
+        // $deletedData = $this->service->all(
+        //     page: $page,
+        //     dataPerPage: $perPage,
+        //     paginate: true,
+        //     relations: [],
+        //     relationCount: ['attendances'],
+        //     whereConditions: $where,
+        // );
+
+        // $deletedData = Activity::onlyTrashed();
+        // return response()->json($deletedData);
+
+    }
 
 
     public function restore($id)
